@@ -10,16 +10,35 @@ function toogle(id){
 
     document.getElementById(id).classList.remove('bg-white','text-gray-400');
     document.getElementById(id).classList.add('bg-[#3B82F6]', 'text-white');
-}
 
-// document.getElementById('interview-btn').addEventListener('click',function(){
-    
-// })
+    if(id=='all-btn')
+    {
+        lukuChuri('all-cards');
+        pressAll();
+    }
+    else if(id=='interview-btn')
+    {
+        lukuChuri('interview-section');
+        pressIntr();
+    }
+    else if(id=='rejected-btn')
+    {
+        lukuChuri('rejected-section');
+        pressRjctd();
+    }
+};
 
-// document.getElementById('rejected-btn').addEventListener('click',function(){
-    
-// })
+function lukuChuri(id){
+    document.getElementById('all-cards').classList.remove('hidden');
+    document.getElementById('interview-section').classList.remove('hidden');
+    document.getElementById('rejected-section').classList.remove('hidden');
+    document.getElementById('no-data').classList.remove('hidden');
 
-// document.getElementById('rejected-btn').addEventListener('click',function(){
-  
-// })
+    document.getElementById('all-cards').classList.add('hidden');
+    document.getElementById('interview-section').classList.add('hidden');
+    document.getElementById('rejected-section').classList.add('hidden');
+    document.getElementById('no-data').classList.add('hidden');
+
+
+    document.getElementById(id).classList.remove('hidden');
+};
