@@ -11,6 +11,7 @@ function count(){
 }
 
 let interviewPart = [];
+
 let rejectedPart = [];
 
 count();
