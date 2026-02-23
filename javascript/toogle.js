@@ -42,3 +42,5 @@ function lukuChuri(id){
 
     document.getElementById(id).classList.remove('hidden');
 };
+
+

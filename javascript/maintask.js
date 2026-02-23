@@ -10,6 +10,9 @@ document.getElementById(id).addEventListener('click',function(event){
     rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company)
     count();
     rendering('rejected-section', rejectedPart);
+    if(id!=='all-cards')
+        pressRjctd();
+    
     const position =card.querySelector('.position').innerText;
     const lts = card.querySelector('.lts').innerText;
     const description = card.querySelector('.description').innerText;
@@ -22,6 +25,8 @@ document.getElementById(id).addEventListener('click',function(event){
     interviewPart = interviewPart.filter(elmnt => elmnt.company !== company);
     count();
     rendering('interview-section',interviewPart);
+    if(id!=='all-cards')
+        pressIntr();
     return;
     }
     card.querySelector('.bdg').innerText = 'INTERVIEW';
@@ -44,6 +49,8 @@ document.getElementById(id).addEventListener('click',function(event){
         interviewPart.push(cardElement);
         count();
         rendering('interview-section',interviewPart);
+        if(id!=='all-cards')
+            pressIntr();
     }
 }
 
@@ -55,6 +62,9 @@ document.getElementById(id).addEventListener('click',function(event){
     interviewPart = interviewPart.filter(elmnt => elmnt.company !== company)
     count();
     rendering('interview-section', interviewPart);
+    if(id!=='all-cards')
+        pressIntr();
+    
     const position =card.querySelector('.position').innerText;
     const lts = card.querySelector('.lts').innerText;
     const description = card.querySelector('.description').innerText;
@@ -67,6 +77,8 @@ document.getElementById(id).addEventListener('click',function(event){
     rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company);
     count();
     rendering('rejected-section', rejectedPart);
+    if(id!=='all-cards')
+        pressRjctd();
     return;
     }
     card.querySelector('.bdg').innerText = 'REJECTED';
@@ -89,6 +101,8 @@ document.getElementById(id).addEventListener('click',function(event){
         rejectedPart.push(cardElement);
         count();
         rendering('rejected-section', rejectedPart);
+        if(id!='all-cards')
+            pressRjctd();
     }
 }
 
@@ -110,6 +124,7 @@ else if(event.target.closest('.trash')){
 function rendering(id, arry){
     document.getElementById(id).innerHTML = '';
     for(let el of arry){
+        const clrClass = (el.badge === 'INTERVIEW')? 'badge-success': 'badge-error';
         const div = document.createElement('div');
         div.className = 'bg-white p-4 rounded-md space-y-3 crd';
         div.innerHTML = `
@@ -124,7 +139,7 @@ function rendering(id, arry){
                 </div>
 
                 <p class="lts text-gray-400">${el.lts}</p>
-                <div class="badge badge-soft badge-primary text-[#002c5c] pt-5 pb-4 font-medium bdg">${el.badge}</div>
+                <div class="badge badge-soft badge-outline ${clrClass} pt-5 pb-4 font-medium bdg">${el.badge}</div>
 
                 <p class="description text-gray-600">${el.description}</p>
                 <div class="space-x-1">
@@ -141,14 +156,6 @@ khelaShuru('all-cards');
 khelaShuru('interview-section');
 khelaShuru('rejected-section');
 
-
-document.getElementById('rejected-section').addEventListener('click',function(event){
-   if(event.target.closest('.trash'))
-    {
-     alldelete(event);
-     pressRjctd();
-    }
-});
 
 function alldelete(event){
     const card = event.target.closest('.crd');
