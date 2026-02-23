@@ -19,9 +19,7 @@ document.getElementById(id).addEventListener('click',function(event){
     let badge = card.querySelector('.bdg').innerText;
     if(badge=='INTERVIEW')
     {
-    card.querySelector('.bdg').classList.remove('badge-outline', 'badge-success');        
-    card.querySelector('.bdg').classList.add('badge-primary', 'text-[#002c5c]');
-    card.querySelector('.bdg').innerText = 'NOT APPLIED'; 
+    notavailable(company);
     interviewPart = interviewPart.filter(elmnt => elmnt.company !== company);
     count();
     rendering('interview-section',interviewPart);
@@ -71,9 +69,7 @@ document.getElementById(id).addEventListener('click',function(event){
     let badge = card.querySelector('.bdg').innerText;
     if(badge=='REJECTED')
     {
-    card.querySelector('.bdg').classList.remove('badge-outline', 'badge-error');        
-    card.querySelector('.bdg').classList.add('badge-primary', 'text-[#002c5c]');
-    card.querySelector('.bdg').innerText = 'NOT APPLIED'; 
+    notavailable(company);
     rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company);
     count();
     rendering('rejected-section', rejectedPart);
@@ -159,8 +155,9 @@ khelaShuru('rejected-section');
 
 function alldelete(event){
     const card = event.target.closest('.crd');
-
+    
     const company = card.querySelector('.company-name').innerText;
+    notavailable(company);
     rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company)
     interviewPart = interviewPart.filter(elmnt => elmnt.company !== company)
     card.remove();
@@ -169,3 +166,16 @@ function alldelete(event){
     count();
 };
 
+function notavailable(company){
+    const mew = document.querySelectorAll('#all-cards .crd');
+    mew.forEach(card =>{
+    const cmpny = card.querySelector('.company-name').innerText;
+        if(cmpny === company){
+        const badge = card.querySelector('.bdg');
+    badge.innerText = "NOT APPLIED";
+    badge.classList.remove('badge-outline', 'badge-success');
+    badge.classList.remove('badge-outline', 'badge-error');
+    badge.classList.add('badge-primary', 'text-[#002c5c]');
+        }
+    });
+};
