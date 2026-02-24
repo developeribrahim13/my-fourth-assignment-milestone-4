@@ -7,11 +7,6 @@ document.getElementById(id).addEventListener('click',function(event){
      const card = event.target.closest('.crd')
     
     const company = card.querySelector('.company-name').innerText;
-    rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company)
-    count();
-    rendering('rejected-section', rejectedPart);
-    if(id!=='all-cards')
-        pressRjctd();
     
     const position =card.querySelector('.position').innerText;
     const lts = card.querySelector('.lts').innerText;
@@ -19,14 +14,17 @@ document.getElementById(id).addEventListener('click',function(event){
     let badge = card.querySelector('.bdg').innerText;
     if(badge=='INTERVIEW')
     {
-    notavailable(company);
-    interviewPart = interviewPart.filter(elmnt => elmnt.company !== company);
-    count();
-    rendering('interview-section',interviewPart);
-    if(id!=='all-cards')
-        pressIntr();
+    alert('this job already exist in interview');
     return;
     }
+
+    success(company);
+    rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company)
+    count();
+    rendering('rejected-section', rejectedPart);
+    if(id!=='all-cards')
+        pressRjctd();
+
     card.querySelector('.bdg').innerText = 'INTERVIEW';
     card.querySelector('.bdg').classList.remove('badge-primary', 'text-[#002c5c]');
     card.querySelector('.bdg').classList.remove('badge-outline', 'badge-error');
@@ -47,8 +45,10 @@ document.getElementById(id).addEventListener('click',function(event){
         interviewPart.push(cardElement);
         count();
         rendering('interview-section',interviewPart);
-        if(id!=='all-cards')
+        if(id==='interview-section')
             pressIntr();
+        else if(id==='rejected-section')
+            pressRjctd();
     }
 }
 
@@ -57,11 +57,6 @@ document.getElementById(id).addEventListener('click',function(event){
      const card = event.target.closest('.crd')
     
     const company = card.querySelector('.company-name').innerText;
-    interviewPart = interviewPart.filter(elmnt => elmnt.company !== company)
-    count();
-    rendering('interview-section', interviewPart);
-    if(id!=='all-cards')
-        pressIntr();
     
     const position =card.querySelector('.position').innerText;
     const lts = card.querySelector('.lts').innerText;
@@ -69,14 +64,17 @@ document.getElementById(id).addEventListener('click',function(event){
     let badge = card.querySelector('.bdg').innerText;
     if(badge=='REJECTED')
     {
-    notavailable(company);
-    rejectedPart = rejectedPart.filter(elmnt => elmnt.company !== company);
-    count();
-    rendering('rejected-section', rejectedPart);
-    if(id!=='all-cards')
-        pressRjctd();
+    alert('this job already exist in rejected');
     return;
     }
+
+    error(company);
+    interviewPart = interviewPart.filter(elmnt => elmnt.company !== company)
+    rendering('interview-section', interviewPart);
+    count();
+    if(id!=='all-cards')
+        pressIntr();
+    
     card.querySelector('.bdg').innerText = 'REJECTED';
     card.querySelector('.bdg').classList.remove('badge-primary', 'text-[#002c5c]');
     card.querySelector('.bdg').classList.remove('badge-outline', 'badge-success');
@@ -97,7 +95,9 @@ document.getElementById(id).addEventListener('click',function(event){
         rejectedPart.push(cardElement);
         count();
         rendering('rejected-section', rejectedPart);
-        if(id!='all-cards')
+        if(id==='interview-section')
+            pressIntr();
+        else if(id==='rejected-section')
             pressRjctd();
     }
 }
@@ -176,6 +176,34 @@ function notavailable(company){
     badge.classList.remove('badge-outline', 'badge-success');
     badge.classList.remove('badge-outline', 'badge-error');
     badge.classList.add('badge-primary', 'text-[#002c5c]');
+        }
+    });
+};
+
+function error(company){
+    const mew = document.querySelectorAll('#all-cards .crd');
+    mew.forEach(card =>{
+    const cmpny = card.querySelector('.company-name').innerText;
+        if(cmpny === company){
+        const badge = card.querySelector('.bdg');
+    badge.innerText = "REJECTED";
+    badge.classList.remove('badge-outline', 'badge-success');
+    badge.classList.remove('badge-primary', 'text-[#002c5c]');
+    badge.classList.add('badge-outline', 'badge-error');
+        }
+    });
+};
+
+function success(company){
+    const mew = document.querySelectorAll('#all-cards .crd');
+    mew.forEach(card =>{
+    const cmpny = card.querySelector('.company-name').innerText;
+        if(cmpny === company){
+        const badge = card.querySelector('.bdg');
+    badge.innerText = "INTERVIEW";
+    badge.classList.remove('badge-primary', 'text-[#002c5c]');
+    badge.classList.remove('badge-outline', 'badge-error');
+    badge.classList.add('badge-outline', 'badge-success');
         }
     });
 };
